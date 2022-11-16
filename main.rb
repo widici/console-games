@@ -64,7 +64,7 @@ class Game
         @players = []
         @deck = Deck.new
 
-        puts "Number of players: "
+        puts "\nNumber of players: "
         choice = gets.chomp.to_i
 
         choice.times do |number|
@@ -101,12 +101,27 @@ class Game
             end
 
         end
-        round
+        play_again
     end
 
     def win(player)
         puts "You won! +$#{$bet}"
         player.add($bet)
+    end
+
+    def play_again()     
+        loop do
+            puts "\nPlay again? y/n"
+            choice = gets.chomp.downcase
+
+            if ["y", "yes"].include?(choice)
+                break
+            elsif ["n", "no"].include?(choice)
+                exit
+            end
+        end
+
+        round
     end
 
 
