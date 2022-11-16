@@ -11,6 +11,10 @@ class Card
     def show()
         "#{self.value}#{self.suit}"
     end
+
+    def get_value()
+        return $values.find_index(self.value)
+    end
 end
 
 
@@ -48,6 +52,10 @@ class Player
     def name()
         @name
     end
+
+    def add(amount)
+        @balance += amount
+    end
 end
 
 
@@ -68,21 +76,39 @@ class Game
 
     def round()
         @players.each do |player|
-            puts "\n#{player.name}'s turn!"
-            card_a, card_b = @deck.draw, @deck.draw
+            puts "\n\n#{player.name}'s turn!"
+            card_a, card_b, card_c = @deck.draw, @deck.draw, @deck.draw
             puts "\n#{card_a.show} ? #{card_b.show}"
 
             loop do
                 puts "\nYou have $#{player.balance}.\nHow much would you like to bet?"
-                bet = gets.chomp.to_i
+                $bet = gets.chomp.to_i
 
-                if bet <= player.balance
+                if $bet <= player.balance and $bet >= 0
                     break
                 end
-                puts "Need $#{player.balance - bet} more $ to bet $#{bet}"
+                puts "Need $#{player.balance - $bet} more $ to bet $#{$bet}"
             end
+
+            puts "\n#{card_a.show} #{card_c.show} #{card_b.show}"
+            if card_c.get_value > card_a.get_value and card_c.get_value < card_b.get_value
+                win(player)
+            elsif card_c.get_value > card_b.get_value and card_c.get_value < card_a.get_value
+                win(player)
+            else
+                puts "You lost! -$#{$bet}"
+                player.add(-$bet)
+            end
+
         end
+        round
     end
+
+    def win(player)
+        puts "You won! +$#{$bet}"
+        player.add($bet)
+    end
+
 
     def show()
         @players.each do |player|
