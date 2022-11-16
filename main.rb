@@ -59,8 +59,8 @@ class Game
         puts "Number of players: "
         choice = gets.chomp.to_i
 
-        choice.times do 
-            puts "\nPlayer name: "
+        choice.times do |number|
+            puts "\nPlayer #{number+1}'s name: "
             name = gets.chomp
             @players << Player.new(name)
         end
@@ -76,10 +76,10 @@ class Game
                 puts "\nYou have $#{player.balance}.\nHow much would you like to bet?"
                 bet = gets.chomp.to_i
 
-                if bet <= player.balance and bet > 0
+                if bet <= player.balance
                     break
                 end
-                puts "\nInvalid input!"
+                puts "Need $#{player.balance - bet} more $ to bet $#{bet}"
             end
         end
     end
