@@ -84,10 +84,13 @@ class Game
                 puts "\nYou have $#{player.balance}.\nHow much would you like to bet?"
                 $bet = gets.chomp.to_i
 
-                if $bet <= player.balance and $bet >= 0
+                if $bet > player.balance
+                    puts "Need $#{$bet - player.balance} more to bet $#{$bet}"
+                elsif $bet < 0
+                    puts "Bet can't be negative"
+                else
                     break
                 end
-                puts "Need $#{player.balance - $bet} more $ to bet $#{$bet}"
             end
 
             puts "\n#{card_a.show} #{card_c.show} #{card_b.show}"
@@ -114,9 +117,9 @@ class Game
             puts "\nPlay again? y/n"
             choice = gets.chomp.downcase
 
-            if ["y", "yes"].include?(choice)
+            if %q[y, yes].include?(choice)
                 break
-            elsif ["n", "no"].include?(choice)
+            elsif %q[n, no].include?(choice)
                 exit
             end
         end
