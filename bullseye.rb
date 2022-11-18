@@ -29,5 +29,20 @@ class Throw
     end
 end
 
-throw = Throw.new()
-puts throw.hit($fast)
+
+class Game
+    def initialize
+        @players = []
+
+        puts "\nNumber of Players: "
+        players = gets.chomp.to_i
+
+        players.times do |idx|
+            puts "\nPlayer #{idx+1}'s name:"
+            name = gets.chomp
+            @players << Player.new(name)
+        end
+    end
+end
+
+game = Game.new
