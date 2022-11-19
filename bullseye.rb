@@ -17,6 +17,10 @@ class Player
     def points()
         @score
     end
+
+    def reset
+        @score = 0
+    end
 end
 
 
@@ -102,6 +106,19 @@ class Game
 
         @players.each do |player|
             puts "#{player.name}: #{player.points}"
+            player.reset
+        end
+
+        loop do
+            puts "Play again? y/n"
+            choice = gets.chomp.downcase
+
+            if %q[y yes].include?(choice)
+                round
+                break
+            elsif %q[n no].include?(coice)
+                exit
+            end
         end
     end
 end
