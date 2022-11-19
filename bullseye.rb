@@ -5,6 +5,10 @@ class Player
         @name = name
         @score = 0
     end
+
+    def name()
+        @name
+    end
 end
 
 
@@ -31,8 +35,13 @@ end
 
 
 class Game
-    def initialize
+    def initialize()
         @players = []
+
+        puts "\nThe objective of the game is to get 200 points to win"
+        puts "\n1 - Fast Overarm - Bullseye or nothing"
+        puts "2 - Controlled Overarm - 10, 20 or 30 points"
+        puts "3 - Underarm - Anything"
 
         puts "\nNumber of Players: "
         players = gets.chomp.to_i
@@ -43,6 +52,15 @@ class Game
             @players << Player.new(name)
         end
     end
+
+    def round()
+        @players.each do |player|
+            puts "\n#{player.name}'s turn!"
+            puts "What is your move:"
+            move = gets.chomp
+        end
+    end
 end
 
 game = Game.new
+game.round
