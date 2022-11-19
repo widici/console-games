@@ -9,6 +9,14 @@ class Player
     def name()
         @name
     end
+
+    def add(value)
+        @score += value
+    end
+
+    def points()
+        @score
+    end
 end
 
 
@@ -57,14 +65,18 @@ class Game
 
     def round()
         @players.each do |player|
-            puts "\n#{player.name}'s turn!"
+            puts "\n\n#{player.name}'s turn!"
 
             loop do
                 puts "\nWhat is your move:"
                 move = gets.chomp
 
                 if $moves.include?(move)
-                    puts @throw.hit($moves[move])
+                    points = @throw.hit($moves[move])
+                    player.add(points)
+
+                    puts "\n#{points}-point zone!"
+                    puts "Your total is now #{player.points}!"
                     break
                 end
             end
