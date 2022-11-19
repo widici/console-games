@@ -75,12 +75,33 @@ class Game
                     points = @throw.hit($moves[move])
                     player.add(points)
 
-                    puts "\n#{points}-point zone!"
-                    puts "Your total is now #{player.points}!"
+                    if points == 0
+                        puts "\nYou missed the target!"
+                    elsif points == 40
+                        puts "\nBullseye! You hit the #{points}-point zone!"
+                    else
+                        puts "\nYou hit the #{points}-point zone!"
+                    end
+                    puts "Your total is now #{player.points} points!"
+
+                    if player.points >= 200
+                        result(player)
+                        exit
+                    end
+
                     break
                 end
             end
 
+        end
+        round
+    end
+
+    def result(winner)
+        puts "\n#{winner.name} won the game!\nResult of all the players:\n\n"
+
+        @players.each do |player|
+            puts "#{player.name}: #{player.points}"
         end
     end
 end
