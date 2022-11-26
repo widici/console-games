@@ -38,10 +38,10 @@ end
 
 
 class Player
-    attr_reader :name
+    attr_reader :name, :balance
 
-    def initialize(name)
-        @balance = 100
+    def initialize(name, balance)
+        @balance = balance
         @name = name
     end
 
@@ -65,12 +65,15 @@ class Game
         @deck = Deck.new
 
         puts "\nNumber of players: "
-        choice = gets.chomp.to_i
+        players_n = gets.chomp.to_i
 
-        choice.times do |number|
+        puts "\nHow much should you start with?: "
+        bal = gets.chomp.to_i
+
+        players_n.times do |number|
             puts "\nPlayer #{number+1}'s name: "
             name = gets.chomp
-            @players << Player.new(name)
+            @players << Player.new(name, bal)
         end
     end
 
