@@ -68,6 +68,10 @@ impl Main {
                 self.pause();
             }
             TurnResults::Draw => {
+                if self.deck.cards.len() == 0 {
+                    self.deck = Deck::default();
+                }
+                
                 self.players.first_mut().unwrap().hand.draw(&mut self.deck, 1);
             }
             TurnResults::BadArg => {}
