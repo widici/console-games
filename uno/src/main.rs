@@ -103,7 +103,8 @@ impl Main {
 
     fn valid_card(&mut self, input: String) -> TurnResults {
         let player: &Player = self.players.first().unwrap();
-
+        
+    
         return if let Ok(num) = input.trim().parse::<i32>() { // Successful cases
             let card = player.hand.cards[num as usize];
 
@@ -190,6 +191,8 @@ impl Main {
             let player: &Player = &self.winners[index];
             println!("{} {}", index+1, player.name)
         }
+
+        play_again()
     }
 }
 
@@ -199,7 +202,6 @@ fn play_again() {
     stdin().read_line(&mut input).unwrap();
 
     if ["y", "yes"].contains(&input.trim()) {
-        println!("@y");
         main()
     } else if ["no", "n"].contains(&input.trim()) {
         std::process::exit(1);
@@ -212,5 +214,4 @@ fn main() {
     let main = Main::new();
     main.pause();
     main.round();
-    play_again();
 }
