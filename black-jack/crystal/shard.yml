@@ -1,0 +1,13 @@
+name: black-jack
+version: 0.1.0
+
+authors:
+  - widici <84205124+widici@users.noreply.github.com>
+
+targets:
+  black-jack:
+    main: src/main.cr
+
+crystal: 1.9.2
+
+license: MIT
