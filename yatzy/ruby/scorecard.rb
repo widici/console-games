@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'terminal-table'
+
 module State
   UNFILLED = :UNFILLED
   FILLED = :FILLED
@@ -31,5 +33,14 @@ class Scorecard
     (UPPER_FIELDS + LOWER_FIELDS).each do |field|
       instance_variable_set("@#{field}", Field.new)
     end
+  end
+
+  def display
+    rows = []
+    (UPPER_FIELDS + LOWER_FIELDS).each do |name|
+      field = instance_variable_get("@#{name}")
+      rows << [name.to_s.sub("_", " ").capitalize, field.state.downcase.capitalize, field.score]
+    end
+    puts Terminal::Table.new :headings => ["Name", "State", "Score"], :rows => rows
   end
 end
