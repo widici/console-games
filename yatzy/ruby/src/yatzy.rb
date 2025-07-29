@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require_relative 'player'
 require_relative 'dice'
+require_relative 'player'
 
 class Game
   def initialize
@@ -22,9 +22,18 @@ class Game
   end
 
   def turn(player)
-    puts "#{player.name}'s turn!"
-    puts 'Scorecard:'
+    puts "\n#{player.name}'s turn!"
     player.scorecard.display
+    dice = Dice.new
+    dice.display
+    2.times do
+      puts 'Choose dice to reroll or skip w/ s'
+      input = gets.chomp
+      next if input == 's'
+
+      input.gsub("/\D/", '').chars.map { |idx| dice.reroll(idx.to_i) }
+      dice.display
+    end
   end
 end
 
