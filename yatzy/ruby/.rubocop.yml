@@ -1,2 +1,24 @@
+AllCops:
+  EnabledByDefault: true
+  NewCops: enable
+
+Style/DocumentationMethod:
+  Enabled: false
+
 Style/Documentation:
+  Enabled: false
+
+Style/Copyright:
+  Enabled: false
+
+Lint/NumberConversion:
+  Enabled: false
+
+Style/ConstantVisibility:
+  Enabled: false
+
+Lint/ConstantResolution:
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
   Enabled: false
