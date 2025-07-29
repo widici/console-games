@@ -2,7 +2,7 @@
 
 require 'table_tennis'
 
-module State
+module Status
   UNFILLED = :UNFILLED
   FILLED = :FILLED
   ZEROED = :ZEROED
@@ -10,10 +10,10 @@ module State
 end
 
 class Field
-  attr_reader :state, :score
+  attr_reader :status, :score
 
   def initialize
-    @state = ::State::UNFILLED
+    @status = ::Status::UNFILLED
     @score = 0
   end
 end
@@ -33,10 +33,21 @@ class Scorecard
 
   def display
     rows = []
-    (UPPER_FIELDS + LOWER_FIELDS).each do |name|
+    (UPPER_FIELDS + LOWER_FIELDS).each_with_index do |name, idx|
       field = instance_variable_get("@#{name}")
-      rows << [name.to_s.sub('_', ' ').capitalize, field.state.downcase.capitalize, field.score]
+      status =
+        case field.status
+        when ::Status::UNFILLED
+          '__'
+        when ::Status::FILLED
+          field.score.to_s
+        when ::Status::ZEROED
+          'x'
+        else
+          abort
+        end
+      rows << [idx.to_s, name.to_s.sub('_', ' ').capitalize, status]
     end
-    TableTennis.new(rows, { title: 'Scorecard', headers: { '0': 'Category', '1': 'State', '2': 'Score' } }).render
+    TableTennis.new(rows, { title: 'Scorecard', headers: { '0': 'Id', '1': 'Category', '2': 'Status' } }).render
   end
 end
