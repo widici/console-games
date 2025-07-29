@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 require_relative 'player'
+require_relative 'dice'
 
 class Game
   def initialize

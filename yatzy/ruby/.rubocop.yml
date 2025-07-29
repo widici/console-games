@@ -22,3 +22,6 @@ Lint/ConstantResolution:
 
 Style/MethodCallWithArgsParentheses:
   Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
