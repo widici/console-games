@@ -10,7 +10,7 @@ module Status
 end
 
 class Field
-  attr_reader :status, :score
+  attr_accessor :status, :score
 
   def initialize
     @status = ::Status::UNFILLED
@@ -21,19 +21,22 @@ end
 class Scorecard
   UPPER_FIELDS = %i[ones twos threes fours fives sixes].freeze
   LOWER_FIELDS = %i[three_kind four_kind full small_st large_st chance yatzy].freeze
-  private_constant :UPPER_FIELDS, :LOWER_FIELDS
-
-  attr_reader(*(UPPER_FIELDS + LOWER_FIELDS))
+  FIELDS = UPPER_FIELDS + LOWER_FIELDS
+  private_constant :UPPER_FIELDS, :LOWER_FIELDS, :FIELDS
 
   def initialize
-    (UPPER_FIELDS + LOWER_FIELDS).each do |field|
+    FIELDS.each do |field|
       instance_variable_set("@#{field}", Field.new)
     end
   end
 
+  def set_status(idx, status)
+    instance_variable_get("@#{FIELDS[idx]}").status = status
+  end
+
   def display
     rows = []
-    (UPPER_FIELDS + LOWER_FIELDS).each_with_index do |name, idx|
+    FIELDS.each_with_index do |name, idx|
       field = instance_variable_get("@#{name}")
       status =
         case field.status

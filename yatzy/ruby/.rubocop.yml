@@ -25,3 +25,9 @@ Style/MethodCallWithArgsParentheses:
 
 Metrics/MethodLength:
   Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/MissingElse:
+  Enabled: false
