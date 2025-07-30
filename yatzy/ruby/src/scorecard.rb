@@ -34,6 +34,16 @@ class Scorecard
     instance_variable_get("@#{FIELDS[idx]}").status = status
   end
 
+  def get_score(idx)
+    instance_variable_get("@#{FIELDS[idx]}").score
+  end
+
+  def set_score(idx, score)
+    field = instance_variable_get("@#{FIELDS[idx]}")
+    field.score = score
+    field.status = ::Status::FILLED
+  end
+
   def display
     rows = []
     FIELDS.each_with_index do |name, idx|

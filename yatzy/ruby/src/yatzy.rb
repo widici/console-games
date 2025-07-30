@@ -73,7 +73,9 @@ class Game
       else
         return fill_cat(player, dice)
       end
-    puts score
+
+    fill_cat(player, dice) if score.zero? || player.scorecard.get_score(input) != 0
+    player.scorecard.set_score(input, score)
   end
 end
 
