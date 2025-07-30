@@ -49,7 +49,32 @@ class Game
     player.scorecard.set_status(gets.chomp.to_i, Status::ZEROED)
   end
 
-  def fill_cat(player, dice); end
+  def fill_cat(player, dice)
+    puts 'Enter id of category: '
+    input = gets.chomp.to_i
+    score =
+      case input
+      when 0..5
+        dice.get_upper(input)
+      when 6..8
+        dice.get_kind(input - 4)
+      when 9
+        dice.get_two_pair
+      when 10
+        dice.get_full_house
+      when 11
+        dice.get_st(1..5)
+      when 12
+        dice.get_st(2..6)
+      when 13
+        dice.sum
+      when 14
+        abort unless dice.get_yatzy
+      else
+        return fill_cat(player, dice)
+      end
+    puts score
+  end
 end
 
 Game.new.round

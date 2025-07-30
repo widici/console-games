@@ -20,9 +20,9 @@ end
 
 class Scorecard
   UPPER_FIELDS = %i[ones twos threes fours fives sixes].freeze
-  LOWER_FIELDS = %i[three_kind four_kind full small_st large_st chance yatzy].freeze
+  LOWER_FIELDS = %i[pair three_kind four_kind two_pair full_house small_st large_st chance yatzy].freeze
   FIELDS = UPPER_FIELDS + LOWER_FIELDS
-  private_constant :UPPER_FIELDS, :LOWER_FIELDS, :FIELDS
+  private_constant :UPPER_FIELDS, :LOWER_FIELDS
 
   def initialize
     FIELDS.each do |field|

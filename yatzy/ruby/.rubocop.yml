@@ -31,3 +31,15 @@ Metrics/AbcSize:
 
 Style/MissingElse:
   Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
