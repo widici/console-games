@@ -32,14 +32,14 @@ class Game
       input = gets.chomp
       break if input == 's'
 
-      input.gsub("/\D/", '').chars.map { |idx| dice.reroll(idx.to_i) }
+      input.gsub("/\D/", '').chars.map { |n| dice.reroll(n.to_i - 1) }
       dice.display
     end
     puts 'Do you want to fill or zero a category (f/z)?: '
-    input = gets.chomp
-    if %w[z zero].include? input
+    idx = gets.chomp
+    if %w[z zero].include? idx
       zero_cat(player)
-    elsif %w[f fill].include? input
+    elsif %w[f fill].include? idx
       fill_cat(player, dice)
     end
   end
@@ -51,31 +51,32 @@ class Game
 
   def fill_cat(player, dice)
     puts 'Enter id of category: '
-    input = gets.chomp.to_i
+    idx = gets.chomp.to_i - 1
     score =
-      case input
-      when 0..5
-        dice.get_upper(input)
-      when 6..8
-        dice.get_kind(input - 4)
-      when 9
+      case Scorecard::FIELDS[idx]
+      when *Scorecard::UPPER_FIELDS
+        dice.get_upper(idx)
+      when :pair, :three_kind, :four_kind
+        dice.get_kind(idx - 5)
+      when :two_pair
         dice.get_two_pair
-      when 10
+      when :full_house
         dice.get_full_house
-      when 11
+      when :small_st
         dice.get_st(1..5)
-      when 12
+      when :large_st
         dice.get_st(2..6)
-      when 13
+      when :chance
         dice.sum
-      when 14
-        abort unless dice.get_yatzy
+      when :yatzy
+        dice.get_yatzy
       else
         return fill_cat(player, dice)
       end
 
-    fill_cat(player, dice) if score.zero? || player.scorecard.get_score(input) != 0
-    player.scorecard.set_score(input, score)
+    return fill_cat(player, dice) if score.zero? || player.scorecard.get_score(idx) != 0
+
+    player.scorecard.set_score(idx, score)
   end
 end
 

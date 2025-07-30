@@ -55,7 +55,7 @@ class Dice
 
   def display
     puts(@dice.map(&:display).transpose.map { |group| group.join ' ' })
-    puts (' ' * 5) + (0..4).map(&:to_s).join(' ' * 11)
+    puts (' ' * 5) + (1..5).map(&:to_s).join(' ' * 11)
   end
 
   def reroll(idx)

@@ -20,9 +20,8 @@ end
 
 class Scorecard
   UPPER_FIELDS = %i[ones twos threes fours fives sixes].freeze
-  LOWER_FIELDS = %i[pair three_kind four_kind two_pair full_house small_st large_st chance yatzy].freeze
+  LOWER_FIELDS = %i[bonus pair three_kind four_kind two_pair full_house small_st large_st chance yatzy].freeze
   FIELDS = UPPER_FIELDS + LOWER_FIELDS
-  private_constant :UPPER_FIELDS, :LOWER_FIELDS
 
   def initialize
     FIELDS.each do |field|
@@ -59,7 +58,7 @@ class Scorecard
         else
           abort
         end
-      rows << [idx.to_s, name.to_s.sub('_', ' ').capitalize, status]
+      rows << [(idx + 1).to_s, name.to_s.sub('_', ' ').capitalize, status]
     end
     TableTennis.new(rows, { title: 'Scorecard', headers: { '0': 'Id', '1': 'Category', '2': 'Status' } }).render
   end
