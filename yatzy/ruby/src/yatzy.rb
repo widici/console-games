@@ -15,11 +15,25 @@ class Game
     end
   end
 
-  def round
-    @players.each do |player|
-      turn(player)
+  def run
+    (Scorecard::FIELDS.size - 1).times do |_|
+      @players.each do |player|
+        turn(player)
+      end
     end
-    round
+    @players.each do |player|
+      puts "#{player.name}'s final scorecard: "
+      player.scorecard.display
+      sum = ((0..5).to_a + (7..15).to_a).map { |idx| player.scorecard.get_score(idx) }
+                                        .sum
+      if sum >= 63
+        player.scorecard.set_score(6, 50) if sum >= 63
+        sum += 50
+      end
+      player.sum = sum
+    end
+    winner = @players.max_by(&:sum)
+    puts "#{winner.name} won with #{winner.sum} points!"
   end
 
   def turn(player)
@@ -46,7 +60,10 @@ class Game
 
   def zero_cat(player)
     puts 'Enter id of category: '
-    player.scorecard.set_status(gets.chomp.to_i, Status::ZEROED)
+    idx = gets.chomp.to_i - 1
+    return zero_cat player if idx == 6
+
+    player.scorecard.set_status(idx, Status::ZEROED)
   end
 
   def fill_cat(player, dice)
@@ -80,4 +97,4 @@ class Game
   end
 end
 
-Game.new.round
+Game.new.run
